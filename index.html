@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Água Viva | High Performance & Wellness</title>
+    
+    <!-- Premium Fonts: Clash Display (Headings) & Inter (Body) -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation & Swiper -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0a192f',
+                        aqua: '#00a8ff',
+                        ice: '#f8fafc',
+                        wa: '#25D366'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Clash Display', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* === BALANCED THEME (LIGHT/DARK HYBRID) === */
+        
+        body {
+            background-color: var(--ice);
+            color: #1e293b;
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor default */
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 10000; pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: #00a8ff; }
+        .cursor-outline {
+            width: 40px; height: 40px; border: 2px solid rgba(0, 168, 255, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .hover-trigger:hover ~ .cursor-outline {
+            width: 60px; height: 60px; background-color: rgba(0, 168, 255, 0.15); border-color: transparent;
+        }
+
+        /* Nav Glass */
+        nav {
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .nav-scrolled {
+            background: rgba(10, 25, 47, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Expanding Flex Cards */
+        .flex-container { display: flex; height: 70vh; min-height: 500px; width: 100%; gap: 16px; }
+        
+        .flex-item {
+            flex: 1; position: relative; overflow: hidden; border-radius: 24px;
+            transition: flex 0.7s cubic-bezier(0.25, 1, 0.5, 1); cursor: none;
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+            background-color: #e2e8f0;
+        }
+        
+        .flex-item:hover { flex: 3; border-color: rgba(0, 168, 255, 0.5); }
+        .flex-item img {
+            width: 100%; height: 100%; object-fit: cover; opacity: 0.8;
+            transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .flex-item:hover img { opacity: 1; transform: scale(1.05); }
+        
+        .gradient-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(10,25,47, 0.95) 0%, rgba(10,25,47, 0.4) 50%, transparent 100%);
+        }
+        
+        .flex-content { position: absolute; bottom: 30px; left: 30px; right: 30px; z-index: 10; }
+        .flex-item .flex-desc {
+            opacity: 0; transform: translateY(20px); transition: all 0.5s ease; max-height: 0;
+        }
+        .flex-item:hover .flex-desc {
+            opacity: 1; transform: translateY(0); transition-delay: 0.1s; max-height: 100px; margin-top: 12px;
+        }
+
+        /* Timetable */
+        .timetable-row {
+            border-bottom: 1px solid rgba(0,0,0,0.05); transition: all 0.3s ease;
+        }
+        .timetable-row:hover {
+            padding-left: 1.5rem; background: rgba(0, 168, 255, 0.05); border-bottom-color: #00a8ff;
+        }
+
+        /* Bento Grid (Dark Section) */
+        .bento-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px; position: relative; overflow: hidden; transition: all 0.3s ease;
+        }
+        .bento-box:hover {
+            border-color: rgba(0, 168, 255, 0.4); box-shadow: 0 10px 40px -10px rgba(0, 168, 255, 0.15); transform: translateY(-5px);
+        }
+
+        /* Swiper Fixes */
+        .swiper-button-next, .swiper-button-prev { color: #00a8ff !important; }
+        .swiper-pagination-bullet-active { background: #00a8ff !important; }
+
+        /* === MOBILE FIXES (Responsiveness) === */
+        @media (hover: none), (pointer: coarse) {
+            body { cursor: auto; } /* Restore default touch behavior */
+            .cursor-dot, .cursor-outline { display: none !important; }
+            .flex-item { cursor: pointer; }
+        }
+
+        @media (max-width: 768px) { 
+            .flex-container { flex-direction: column; height: auto; gap: 16px; }
+            .flex-item { height: 260px; flex: none !important; } /* Disable expansion on mobile */
+            .flex-item .flex-desc { opacity: 1; transform: translateY(0); max-height: 100px; margin-top: 8px; }
+            .flex-item img { opacity: 0.8; }
+            
+            .bento-box:hover { transform: none; box-shadow: none; }
+            .timetable-row:hover { padding-left: 0; background: transparent; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- ========================================== -->
+    <!-- INÍCIO DA ÁREA DE MANUTENÇÃO (FÁCIL DE EDITAR) -->
+    <!-- ========================================== -->
+    <script>
+        const SITE_CONFIG = {
+            whatsappNumero: "5541988517497",
+            instagramLink: "https://instagram.com/academiaaguaviva_clbo",
+            facebookLink: "https://facebook.com/academiaaguavivacolombo",
+            endereco: "Av. São Gabriel, 345 - Jardim Marambaia, Colombo - PR",
+            
+            // POSTS PARA AS REDES SOCIAIS E AVISOS
+            // Você pode escolher se o post é do "instagram" ou do "facebook" no campo "rede"
+            // Se não quiser imagem no post (apenas aviso de texto), deixe o campo imagem VAZIO: imagem: ""
+            postsRedesSociais: [
+                {
+                    imagem: "assets/img/post1.jpg",
+                    linkPost: "https://instagram.com/academiaaguaviva_clbo",
+                    rede: "instagram",
+                    texto: "Nossas turmas na piscina a todo vapor! 💦 Acompanhamos o seu ritmo com profissionais de excelência. Agende sua aula experimental!"
+                },
+                {
+                    imagem: "",
+                    linkPost: "https://facebook.com/academiaaguavivacolombo",
+                    rede: "facebook",
+                    texto: "⚠️ AVISO IMPORTANTE: Informamos aos nossos alunos que nesta sexta-feira funcionaremos em horário normal. Venha treinar!"
+                },
+                {
+                    imagem: "assets/img/post2.jpg",
+                    linkPost: "https://facebook.com/academiaaguavivacolombo",
+                    rede: "facebook",
+                    texto: "A melhor estrutura de Colombo - PR para a sua família! Piscinas aquecidas e tratadas com rigor. O verão o ano inteiro está aqui. 🏊‍♂️💙"
+                },
+                {
+                    imagem: "",
+                    linkPost: "https://instagram.com/academiaaguaviva_clbo",
+                    rede: "instagram",
+                    texto: "💡 Dica do professor: A respiração correta é o segredo para não cansar rápido no crawl. Inspire pela boca e solte pelo nariz debaixo d'água!"
+                },
+                {
+                    imagem: "assets/img/post3.jpg",
+                    linkPost: "https://instagram.com/academiaaguaviva_clbo",
+                    rede: "instagram",
+                    texto: "Já conhece o nosso espaço? Estamos localizados na Av. São Gabriel. Natação adulto, infantil e hidroginástica. Faça-nos uma visita! 📍"
+                },
+                {
+                    imagem: "",
+                    linkPost: "https://facebook.com/academiaaguavivacolombo",
+                    rede: "facebook",
+                    texto: "🔥 ÚLTIMAS VAGAS! Nossa turma de Hidroginástica das 19h está quase cheia. Garanta a sua vaga e venha melhorar sua saúde e energia!"
+                }
+            ]
+        };
+    </script>
+    <!-- ========================================== -->
+
+    <!-- Header / Nav (Starts Transparent, turns Dark Navy on scroll) -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 px-6 py-5 flex justify-between items-center bg-transparent border-b border-transparent">
+        <div class="font-display font-bold text-2xl text-white tracking-widest uppercase hover-trigger cursor-pointer relative z-50" onclick="window.scrollTo(0,0)">
+            <i class="fa-solid fa-water text-aqua mr-2"></i>Água Viva
+        </div>
+        
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex gap-10 text-sm tracking-[0.1em] uppercase text-white/90 font-medium" id="nav-links">
+            <li><a href="#sobre" class="hover:text-aqua transition-colors hover-trigger">A Essência</a></li>
+            <li><a href="#modalidades" class="hover:text-aqua transition-colors hover-trigger">Modalidades</a></li>
+            <li><a href="#horarios" class="hover:text-aqua transition-colors hover-trigger">Rotina</a></li>
+            <li><a href="#novidades" class="hover:text-aqua transition-colors hover-trigger">Notícias</a></li>
+        </ul>
+        <a href="https://wa.me/5541988517497" id="nav-whatsapp" target="_blank" class="hidden sm:inline-block bg-aqua text-navy font-bold px-8 py-3 rounded-full text-sm uppercase tracking-widest hover:bg-white transition-all duration-300 hover-trigger relative z-50">
+            Contato
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-white text-3xl focus:outline-none relative z-50 hover-trigger p-2">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-navy/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-500 flex flex-col justify-center items-center gap-8">
+        <a href="#sobre" class="mobile-link font-display text-4xl text-white uppercase tracking-widest hover:text-aqua transition-colors">A Essência</a>
+        <a href="#modalidades" class="mobile-link font-display text-4xl text-white uppercase tracking-widest hover:text-aqua transition-colors">Modalidades</a>
+        <a href="#horarios" class="mobile-link font-display text-4xl text-white uppercase tracking-widest hover:text-aqua transition-colors">Rotina</a>
+        <a href="#novidades" class="mobile-link font-display text-4xl text-white uppercase tracking-widest hover:text-aqua transition-colors">Notícias</a>
+        <a href="https://wa.me/5541988517497" id="mobile-whatsapp" target="_blank" class="mt-8 bg-aqua text-navy font-bold px-12 py-4 rounded-full text-lg uppercase tracking-widest">
+            Fale Conosco
+        </a>
+    </div>
+
+    <!-- Hero Section (DARK NAVY) -->
+    <header class="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-navy">
+        <!-- Darkened Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="assets/img/hero-bg.jpg" class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-b from-navy/90 via-navy/50 to-navy"></div>
+        </div>
+        
+        <div class="z-10 text-center w-full mt-20 relative px-4">
+            <span class="text-aqua text-xs md:text-base tracking-[0.3em] uppercase font-bold mb-6 block" data-aos="fade-down">
+                Alta Performance & Bem Estar
+            </span>
+            
+            <h1 class="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] font-bold text-white tracking-tight leading-none mb-6 hover-trigger" data-aos="zoom-out">
+                ÁGUA VIVA
+            </h1>
+            
+            <div class="mt-8 flex justify-center" data-aos="fade-up" data-aos-delay="200">
+                <p class="text-slate-200 font-medium max-w-2xl text-base md:text-xl leading-relaxed">
+                    A arquitetura perfeita para o seu corpo. Mergulhe em uma estrutura de elite desenhada para transformar a sua relação com a água em Colombo, PR.
+                </p>
+            </div>
+            
+            <div class="mt-12 flex justify-center" data-aos="fade-up" data-aos-delay="400">
+                <a href="#modalidades" class="border-2 border-aqua text-aqua font-bold px-8 md:px-10 py-3 md:py-4 rounded-full text-sm md:text-lg uppercase tracking-wider hover:bg-aqua hover:text-navy transition-colors hover-trigger">
+                    Conhecer a Estrutura
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce flex flex-col items-center text-white/50">
+            <i class="fa-solid fa-arrow-down text-aqua text-xl"></i>
+        </div>
+    </header>
+
+    <!-- Big Statement Section (LIGHT WHITE) -->
+    <section class="py-20 md:py-32 px-6 bg-white" id="sobre">
+        <div class="max-w-6xl mx-auto text-center md:text-left border-l-0 md:border-l-4 border-aqua pl-0 md:pl-12">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-6xl font-bold leading-tight text-slate-900" data-aos="fade-up">
+                Não somos apenas uma piscina.<br>
+                <span class="text-aqua block mt-2 md:mt-0">Somos um ecossistema de evolução contínua.</span>
+            </h2>
+        </div>
+    </section>
+
+    <!-- Expanding Flex Cards Section (LIGHT ICE) -->
+    <section class="py-16 md:py-20 px-4 bg-ice" id="modalidades">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="mb-12 flex flex-col md:flex-row justify-between md:items-end gap-6 text-center md:text-left" data-aos="fade-right">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-slate-900 uppercase tracking-wider">Experiências</h2>
+                <p class="text-slate-500 text-base md:text-lg max-w-xl font-medium">Nossas modalidades são conduzidas por profissionais focados no seu resultado, do iniciante ao avançado.</p>
+            </div>
+            
+            <div class="flex-container" data-aos="fade-up">
+                <!-- Item 1 -->
+                <div class="flex-item hover-trigger">
+                    <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=1000&q=80" alt="Natação" onerror="this.src='https://via.placeholder.com/800x600?text=Agua+Viva'">
+                    <div class="gradient-overlay"></div>
+                    <div class="flex-content">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-aqua/20 border border-aqua flex items-center justify-center mb-4 md:mb-6 backdrop-blur-sm">
+                            <i class="fa-solid fa-person-swimming text-xl md:text-2xl text-aqua"></i>
+                        </div>
+                        <h3 class="font-display text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Natação</h3>
+                        <p class="flex-desc text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Aulas focadas em segurança, respiração e aperfeiçoamento técnico contínuo.</p>
+                    </div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="flex-item hover-trigger">
+                    <img src="https://images.unsplash.com/photo-1576610616656-d3aa5d1f4534?auto=format&fit=crop&w=1000&q=80" alt="Hidroginástica" onerror="this.src='https://via.placeholder.com/800x600?text=Agua+Viva'">
+                    <div class="gradient-overlay"></div>
+                    <div class="flex-content">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-aqua/20 border border-aqua flex items-center justify-center mb-4 md:mb-6 backdrop-blur-sm">
+                            <i class="fa-solid fa-water text-xl md:text-2xl text-aqua"></i>
+                        </div>
+                        <h3 class="font-display text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Hidroginástica</h3>
+                        <p class="flex-desc text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Impacto zero, energia máxima. Um ambiente imersivo para seu condicionamento físico.</p>
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="flex-item hover-trigger">
+                    <img src="https://images.unsplash.com/photo-1560090995-01632a28895b?auto=format&fit=crop&w=1000&q=80" alt="Performance" onerror="this.src='https://via.placeholder.com/800x600?text=Agua+Viva'">
+                    <div class="gradient-overlay"></div>
+                    <div class="flex-content">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-aqua/20 border border-aqua flex items-center justify-center mb-4 md:mb-6 backdrop-blur-sm">
+                            <i class="fa-solid fa-stopwatch text-xl md:text-2xl text-aqua"></i>
+                        </div>
+                        <h3 class="font-display text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Performance</h3>
+                        <p class="flex-desc text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Treinamento de elite estruturado para quebra de limites e correção biomecânica avançada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid Diferenciais (DARK NAVY) -->
+    <section class="py-20 md:py-32 px-6 bg-navy" id="diferenciais">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6">
+            
+            <div class="md:col-span-12 mb-4 md:mb-8 text-center md:text-left" data-aos="fade-up">
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white uppercase tracking-wider">Nossa Estrutura</h2>
+            </div>
+            
+            <!-- Bento Box 1 -->
+            <div class="bento-box md:col-span-8 p-8 md:p-14 hover-trigger" data-aos="fade-up">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-6 md:mb-8">
+                    <i class="fa-solid fa-shield-halved text-4xl md:text-5xl text-aqua"></i>
+                    <h3 class="font-display text-2xl md:text-3xl font-bold text-white">Água Nível Premium</h3>
+                </div>
+                <p class="text-slate-300 font-medium text-base md:text-xl leading-relaxed max-w-2xl">
+                    Utilizamos os mais rigorosos padrões de filtragem e aquecimento. O resultado é uma água cristalina, na temperatura exata, o ano inteiro. Sua pele e saúde respiratória agradecem.
+                </p>
+            </div>
+            
+            <!-- Bento Box 2 -->
+            <div class="bento-box md:col-span-4 p-8 md:p-14 flex flex-col justify-center hover-trigger" data-aos="fade-up" data-aos-delay="100">
+                <i class="fa-solid fa-users text-4xl text-aqua mb-6"></i>
+                <h3 class="font-display text-2xl font-bold text-white mb-4">Equipe Especializada</h3>
+                <p class="text-slate-300 font-medium text-base md:text-lg">Profissionais registrados, treinados em técnica e atendimento humano de excelência.</p>
+            </div>
+            
+            <!-- Bento Box 3 -->
+            <div class="bento-box md:col-span-4 p-8 md:p-14 hover-trigger" data-aos="fade-up">
+                <h1 class="font-display text-6xl md:text-7xl font-bold text-aqua mb-2">5.0</h1>
+                <div class="flex text-aqua mb-4 text-base md:text-lg"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <h3 class="font-display text-xl font-bold text-white">Avaliação Máxima</h3>
+                <p class="text-slate-300 font-medium mt-2">Reconhecimento absoluto de centenas de alunos ativos.</p>
+            </div>
+            
+            <!-- Bento Box 4 -->
+            <div class="bento-box md:col-span-8 p-8 md:p-14 bg-[#050d1a] border border-aqua/30 hover-trigger" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 mb-6 md:mb-8">
+                    <i class="fa-solid fa-medal text-4xl md:text-5xl text-aqua"></i>
+                    <h3 class="font-display text-2xl md:text-3xl font-bold text-white">Evolução Comprovada</h3>
+                </div>
+                <p class="text-slate-300 font-medium text-base md:text-xl leading-relaxed max-w-3xl">
+                    Não vendemos apenas acesso à piscina. Vendemos saúde transformadora, redução de estresse e ganho de longevidade documentado por nossos alunos.
+                </p>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Timetable (LIGHT WHITE) -->
+    <section class="py-20 md:py-32 px-6 bg-white" id="horarios">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20">
+            <div data-aos="fade-right" class="text-center md:text-left">
+                <h2 class="font-display text-4xl sm:text-5xl md:text-7xl font-bold text-slate-900 uppercase leading-tight mb-6 md:mb-8">
+                    O Ritmo <br><span class="text-aqua">Perfeito</span>
+                </h2>
+                <p class="text-slate-600 font-medium text-base md:text-xl leading-relaxed max-w-md mx-auto md:mx-0 mb-8 md:mb-12">
+                    Aberto de segunda a sábado. Nossa arquitetura de horários foi pensada para se adaptar à sua rotina.
+                </p>
+                <a href="https://wa.me/5541988517497" id="horarios-whatsapp" target="_blank" class="inline-flex items-center justify-center gap-4 text-white bg-navy w-full sm:w-auto px-8 py-4 rounded-full font-bold uppercase tracking-wider hover:bg-aqua hover:text-navy transition-colors hover-trigger">
+                    Agende seu horário <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div class="flex flex-col justify-center" data-aos="fade-left">
+                <div class="timetable-row py-5 md:py-6 flex flex-col sm:flex-row justify-between sm:items-center hover-trigger text-center sm:text-left">
+                    <h3 class="font-display text-xl sm:text-2xl md:text-4xl text-slate-900 font-bold uppercase">Segunda-feira</h3>
+                    <div class="mt-2 sm:mt-0 font-bold tracking-wide text-aqua text-base md:text-lg">06:00 - 12:00 <span class="text-slate-300 mx-1 md:mx-2">|</span> 13:30 - 20:15</div>
+                </div>
+                <div class="timetable-row py-5 md:py-6 flex flex-col sm:flex-row justify-between sm:items-center hover-trigger text-center sm:text-left">
+                    <h3 class="font-display text-xl sm:text-2xl md:text-4xl text-slate-900 font-bold uppercase">Terça-feira</h3>
+                    <div class="mt-2 sm:mt-0 font-bold tracking-wide text-aqua text-base md:text-lg">06:00 - 12:00</div>
+                </div>
+                <div class="timetable-row py-5 md:py-6 flex flex-col sm:flex-row justify-between sm:items-center hover-trigger text-center sm:text-left">
+                    <h3 class="font-display text-xl sm:text-2xl md:text-4xl text-slate-900 font-bold uppercase">Quarta-feira</h3>
+                    <div class="mt-2 sm:mt-0 font-bold tracking-wide text-aqua text-base md:text-lg">06:00 - 12:00 <span class="text-slate-300 mx-1 md:mx-2">|</span> 13:30 - 20:15</div>
+                </div>
+                <div class="timetable-row py-5 md:py-6 flex flex-col sm:flex-row justify-between sm:items-center hover-trigger text-center sm:text-left">
+                    <h3 class="font-display text-xl sm:text-2xl md:text-4xl text-slate-900 font-bold uppercase">Quinta-feira</h3>
+                    <div class="mt-2 sm:mt-0 font-bold tracking-wide text-aqua text-base md:text-lg">06:00 - 12:00 <span class="text-slate-300 mx-1 md:mx-2">|</span> 14:00 - 20:15</div>
+                </div>
+                <div class="timetable-row py-5 md:py-6 flex flex-col sm:flex-row justify-between sm:items-center hover-trigger text-center sm:text-left">
+                    <h3 class="font-display text-xl sm:text-2xl md:text-4xl text-slate-900 font-bold uppercase">Sexta-feira</h3>
+                    <div class="mt-2 sm:mt-0 font-bold tracking-wide text-aqua text-base md:text-lg">06:00 - 12:00 <span class="text-slate-300 mx-1 md:mx-2">|</span> 14:00 - 20:15</div>
+                </div>
+                <div class="timetable-row py-5 md:py-6 flex flex-col sm:flex-row justify-between sm:items-center hover-trigger border-b-0 text-center sm:text-left">
+                    <h3 class="font-display text-xl sm:text-2xl md:text-4xl text-slate-900 font-bold uppercase">Sábado</h3>
+                    <div class="mt-2 sm:mt-0 font-bold tracking-wide text-white text-base md:text-lg bg-navy px-4 py-1 rounded inline-block">08:00 - 12:00</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Journal (LIGHT ICE) -->
+    <section class="py-20 md:py-32 overflow-hidden bg-ice border-t border-b border-black/5" id="novidades">
+        <div class="max-w-[1400px] mx-auto px-6 mb-8 md:mb-12 flex flex-col lg:flex-row justify-between items-center gap-6" data-aos="fade-up">
+            <h2 class="font-display text-3xl md:text-5xl font-bold uppercase text-slate-900 text-center lg:text-left w-full lg:w-auto">
+                <i class="fa-solid fa-rss text-aqua mr-2 md:mr-3"></i> Últimas Notícias
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto justify-center">
+                <a href="#" id="btn-siga-insta" target="_blank" class="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-3 px-6 rounded-full hover:scale-105 transition-transform text-sm md:text-base">
+                    <i class="fa-brands fa-instagram text-xl"></i> Seguir Instagram
+                </a>
+                <a href="#" id="btn-siga-face" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-full hover:scale-105 transition-transform text-sm md:text-base">
+                    <i class="fa-brands fa-facebook-f text-xl"></i> Seguir Facebook
+                </a>
+            </div>
+        </div>
+        
+        <div class="swiper journalSwiper px-6 md:px-[calc((100vw-1400px)/2)]" data-aos="fade-up" data-aos-delay="100" style="padding-left: max(1.5rem, calc((100vw - 1400px) / 2)); padding-bottom: 3rem;">
+            <div class="swiper-wrapper" id="redes-feed-container">
+                <!-- Javascript will inject from SITE_CONFIG -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Pre-Footer CTA (AQUA GRADIENT) -->
+    <section class="py-20 md:py-24 px-6 bg-gradient-to-r from-aqua to-blue-400 text-center">
+        <h2 class="font-display text-3xl sm:text-4xl md:text-6xl font-bold uppercase leading-tight text-white mb-8 hover-trigger" data-aos="zoom-in">
+            Pronto para dar o<br>primeiro mergulho?
+        </h2>
+        <a href="https://wa.me/5541988517497" id="cta-whatsapp" target="_blank" class="inline-block relative hover-trigger group">
+            <div class="relative bg-navy text-white font-display uppercase tracking-widest font-bold px-8 md:px-12 py-4 md:py-5 rounded-full text-base md:text-lg group-hover:bg-white group-hover:text-navy transition-colors duration-500 shadow-xl">
+                Iniciar Jornada
+            </div>
+        </a>
+    </section>
+
+    <!-- Footer (DARK NAVY) -->
+    <footer class="bg-navy pt-16 md:pt-20 pb-10 px-6 border-t border-white/5">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-16 md:mb-20 text-center md:text-left">
+            <div class="flex flex-col items-center md:items-start">
+                <h3 class="font-display font-bold text-3xl md:text-4xl text-white uppercase mb-4 md:mb-6">
+                    <i class="fa-solid fa-water text-aqua mr-2"></i>Água Viva
+                </h3>
+                <p class="text-slate-300 font-medium leading-relaxed mb-6 md:mb-8 max-w-sm text-base md:text-lg">
+                    Reescrevendo o conceito de natação e bem-estar em Colombo, unindo infraestrutura premium e atendimento humano incomparável.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" id="footer-insta" target="_blank" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white text-lg md:text-xl hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:border-transparent transition-colors hover-trigger">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" id="footer-face" target="_blank" class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white text-lg md:text-xl hover:bg-blue-600 hover:border-transparent transition-colors hover-trigger">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-display text-base md:text-lg tracking-widest uppercase text-aqua font-bold mb-4 md:mb-6">Endereço</h4>
+                <p class="text-white font-medium leading-relaxed text-base md:text-lg" id="footer-endereco">
+                    Av. São Gabriel, 345<br>Jardim Marambaia<br>Colombo - PR, 83404-000
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="font-display text-base md:text-lg tracking-widest uppercase text-aqua font-bold mb-4 md:mb-6">Contato</h4>
+                <a href="#" id="footer-whatsapp" class="block text-2xl md:text-3xl font-bold text-white hover:text-aqua transition-colors mb-2 md:mb-4 hover-trigger">(41) 9 8851-7497</a>
+                <a href="tel:+554130371338" class="block text-xl md:text-2xl font-medium text-slate-300 hover:text-aqua transition-colors hover-trigger">(41) 3037-1338</a>
+            </div>
+        </div>
+        
+        <div class="max-w-[1400px] mx-auto border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between text-xs md:text-sm text-slate-400 font-medium uppercase tracking-widest text-center md:text-left gap-4">
+            <p>&copy; 2026 ÁGUA VIVA ACADEMIA</p>
+            <p>Design Exclusivo High-End</p>
+        </div>
+    </footer>
+
+    <!-- Fixed Floating WhatsApp Button -->
+    <a href="https://wa.me/5541988517497" id="float-whatsapp" target="_blank" class="fixed bottom-6 md:bottom-8 right-6 md:right-8 z-50 rounded-full w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-white text-2xl md:text-3xl bg-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform hover-trigger">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    
+    <script>
+        // --- INJECTION FROM SITE_CONFIG ---
+        function applySiteConfig() {
+            const waUrl = `https://wa.me/${SITE_CONFIG.whatsappNumero}`;
+            document.getElementById('nav-whatsapp').href = waUrl;
+            document.getElementById('mobile-whatsapp').href = waUrl;
+            document.getElementById('horarios-whatsapp').href = waUrl;
+            document.getElementById('cta-whatsapp').href = waUrl;
+            document.getElementById('footer-whatsapp').href = waUrl;
+            document.getElementById('float-whatsapp').href = waUrl;
+            
+            document.getElementById('btn-siga-insta').href = SITE_CONFIG.instagramLink;
+            document.getElementById('btn-siga-face').href = SITE_CONFIG.facebookLink;
+            document.getElementById('footer-insta').href = SITE_CONFIG.instagramLink;
+            document.getElementById('footer-face').href = SITE_CONFIG.facebookLink;
+            document.getElementById('footer-endereco').innerHTML = SITE_CONFIG.endereco.replace(' - ', '<br>');
+
+            const feedContainer = document.getElementById('redes-feed-container');
+            SITE_CONFIG.postsRedesSociais.forEach(post => {
+                
+                // Define icons and colors based on network
+                const isFace = post.rede === 'facebook';
+                const iconClass = isFace ? 'fa-facebook text-blue-600' : 'fa-instagram text-pink-500';
+                const brandColor = isFace ? 'text-blue-600' : 'text-pink-500';
+                
+                let cardContent = '';
+                
+                if (post.imagem && post.imagem.trim() !== '') {
+                    // POST COM IMAGEM
+                    cardContent = `
+                        <div class="h-[45%] w-full overflow-hidden bg-slate-100">
+                            <img src="${post.imagem}" onerror="this.src='https://via.placeholder.com/800x600?text=Agua+Viva'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="h-[55%] w-full p-6 md:p-8 flex flex-col justify-start pt-6">
+                            <i class="fa-brands ${iconClass} text-2xl md:text-3xl mb-3 md:mb-4"></i>
+                            <p class="text-slate-700 font-medium text-base md:text-lg leading-snug line-clamp-4">${post.texto}</p>
+                        </div>
+                    `;
+                } else {
+                    // POST SOMENTE TEXTO (AVISOS)
+                    cardContent = `
+                        <div class="h-full w-full p-8 md:p-10 flex flex-col justify-center items-center text-center bg-gradient-to-br from-white to-slate-50 relative">
+                            <i class="fa-brands ${iconClass} text-4xl md:text-5xl mb-6 opacity-90"></i>
+                            <p class="text-slate-800 font-bold text-lg md:text-xl leading-relaxed line-clamp-6">${post.texto}</p>
+                            <i class="fa-solid fa-quote-right absolute bottom-6 right-6 text-5xl opacity-5 ${brandColor}"></i>
+                        </div>
+                    `;
+                }
+
+                feedContainer.innerHTML += `
+                    <div class="swiper-slide">
+                        <a href="${post.linkPost}" target="_blank" class="block relative group overflow-hidden rounded-3xl h-[400px] md:h-[420px] cursor-pointer md:cursor-none hover-trigger bg-white shadow-lg border border-slate-100 hover:border-aqua/30 transition-colors">
+                            ${cardContent}
+                        </a>
+                    </div>
+                `;
+            });
+        }
+        applySiteConfig();
+
+        // --- MOBILE MENU LOGIC ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // --- SWIPER INIT ---
+        new Swiper('.journalSwiper', {
+            slidesPerView: 1.2, spaceBetween: 16,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            breakpoints: {
+                640: { slidesPerView: 2.2, spaceBetween: 24 },
+                1024: { slidesPerView: 3.5, spaceBetween: 24 },
+                1400: { slidesPerView: 4.2, spaceBetween: 24 }
+            }
+        });
+
+        // --- AOS INIT ---
+        AOS.init({ once: true, offset: 50, duration: 800, easing: 'ease-out-cubic' });
+
+        // --- NAVBAR SCROLL ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+                navbar.classList.remove('bg-transparent', 'py-5');
+                navbar.classList.add('py-4');
+            } else {
+                navbar.classList.remove('nav-scrolled', 'py-4');
+                navbar.classList.add('bg-transparent', 'py-5');
+            }
+        });
+
+        // --- CUSTOM CURSOR ---
+        // Only initialize if it's a non-touch device
+        if (window.matchMedia("(pointer: fine)").matches) {
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorOutline = document.getElementById('cursor-outline');
+            
+            window.addEventListener('mousemove', function(e) {
+                const posX = e.clientX;
+                const posY = e.clientY;
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+                cursorOutline.animate({ left: `${posX}px`, top: `${posY}px` }, { duration: 300, fill: "forwards" });
+            });
+            
+            document.addEventListener('mouseleave', () => { cursorDot.style.opacity='0'; cursorOutline.style.opacity='0'; });
+            document.addEventListener('mouseenter', () => { cursorDot.style.opacity='1'; cursorOutline.style.opacity='1'; });
+        }
+    </script>
+</body>
+</html>
