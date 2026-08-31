@@ -102,7 +102,7 @@
             opacity: 0; transform: translateY(20px); transition: all 0.5s ease; max-height: 0;
         }
         .flex-item:hover .flex-desc {
-            opacity: 1; transform: translateY(0); transition-delay: 0.1s; max-height: 100px; margin-top: 12px;
+            opacity: 1; transform: translateY(0); transition-delay: 0.1s; max-height: 160px; margin-top: 12px;
         }
 
         /* Timetable */
@@ -136,8 +136,8 @@
 
         @media (max-width: 768px) { 
             .flex-container { flex-direction: column; height: auto; gap: 16px; }
-            .flex-item { height: 260px; flex: none !important; } /* Disable expansion on mobile */
-            .flex-item .flex-desc { opacity: 1; transform: translateY(0); max-height: 100px; margin-top: 8px; }
+            .flex-item { height: 280px; flex: none !important; } /* Disable expansion on mobile */
+            .flex-item .flex-desc { opacity: 1; transform: translateY(0); max-height: 160px; margin-top: 8px; }
             .flex-item img { opacity: 0.8; }
             
             .bento-box:hover { transform: none; box-shadow: none; }
@@ -161,6 +161,18 @@
             facebookLink: "https://facebook.com/academiaaguavivacolombo",
             endereco: "Av. São Gabriel, 345 - Jardim Marambaia, Colombo - PR",
             
+            // MENSAGENS AUTOMÁTICAS DO WHATSAPP (FÁCIL DE PERSONALIZAR)
+            mensagensAutomaticas: {
+                padrao: "Olá! Gostaria de mais informações sobre a Academia Água Viva.",
+                aulaExperimental: "Olá! Gostaria de agendar uma aula experimental na Água Viva.",
+                planosEValores: "Olá! Gostaria de conhecer os planos, mensalidades e modalidades disponíveis.",
+                horarios: "Olá! Gostaria de consultar os horários disponíveis para turmas.",
+                jornada: "Olá! Quero dar o primeiro mergulho e iniciar minha jornada na Água Viva!",
+                natacao: "Olá! Gostaria de agendar uma aula e saber mais sobre Natação.",
+                hidroginastica: "Olá! Quero saber mais sobre as turmas e horários de Hidroginástica.",
+                performance: "Olá! Gostaria de informações sobre o treinamento de Performance."
+            },
+
             // POSTS PARA AS REDES SOCIAIS E AVISOS
             // Você pode escolher se o post é do "instagram" ou do "facebook" no campo "rede"
             // Se não quiser imagem no post (apenas aviso de texto), deixe o campo imagem VAZIO: imagem: ""
@@ -304,7 +316,12 @@
                             <i class="fa-solid fa-person-swimming text-xl md:text-2xl text-aqua"></i>
                         </div>
                         <h3 class="font-display text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Natação</h3>
-                        <p class="flex-desc text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Aulas focadas em segurança, respiração e aperfeiçoamento técnico contínuo.</p>
+                        <div class="flex-desc">
+                            <p class="text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Aulas focadas em segurança, respiração e aperfeiçoamento técnico contínuo.</p>
+                            <a href="#" target="_blank" class="btn-modalidade-wa mt-3 inline-flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-wider bg-aqua text-navy px-4 py-2 rounded-full hover:bg-white transition-colors" data-modalidade="natacao">
+                                Agendar Natação <i class="fa-brands fa-whatsapp text-sm"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
@@ -317,7 +334,12 @@
                             <i class="fa-solid fa-water text-xl md:text-2xl text-aqua"></i>
                         </div>
                         <h3 class="font-display text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Hidroginástica</h3>
-                        <p class="flex-desc text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Impacto zero, energia máxima. Um ambiente imersivo para seu condicionamento físico.</p>
+                        <div class="flex-desc">
+                            <p class="text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Impacto zero, energia máxima. Um ambiente imersivo para seu condicionamento físico.</p>
+                            <a href="#" target="_blank" class="btn-modalidade-wa mt-3 inline-flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-wider bg-aqua text-navy px-4 py-2 rounded-full hover:bg-white transition-colors" data-modalidade="hidroginastica">
+                                Agendar Hidroginástica <i class="fa-brands fa-whatsapp text-sm"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
@@ -330,7 +352,12 @@
                             <i class="fa-solid fa-stopwatch text-xl md:text-2xl text-aqua"></i>
                         </div>
                         <h3 class="font-display text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">Performance</h3>
-                        <p class="flex-desc text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Treinamento de elite estruturado para quebra de limites e correção biomecânica avançada.</p>
+                        <div class="flex-desc">
+                            <p class="text-slate-200 font-medium text-sm md:text-lg leading-relaxed">Treinamento de elite estruturado para quebra de limites e correção biomecânica avançada.</p>
+                            <a href="#" target="_blank" class="btn-modalidade-wa mt-3 inline-flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-wider bg-aqua text-navy px-4 py-2 rounded-full hover:bg-white transition-colors" data-modalidade="performance">
+                                Agendar Treino <i class="fa-brands fa-whatsapp text-sm"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -505,25 +532,104 @@
         </div>
     </footer>
 
-    <!-- Fixed Floating WhatsApp Button -->
-    <a href="https://wa.me/5541988517497" id="float-whatsapp" target="_blank" class="fixed bottom-6 md:bottom-8 right-6 md:right-8 z-50 rounded-full w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-white text-2xl md:text-3xl bg-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform hover-trigger">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    <!-- WhatsApp Floating Widget & Interactive Assistant -->
+    <div id="wa-widget-container" class="fixed bottom-6 md:bottom-8 right-6 md:right-8 z-50 flex flex-col items-end">
+        
+        <!-- Popup Chat Box -->
+        <div id="wa-chat-box" class="hidden opacity-0 translate-y-4 transition-all duration-300 mb-4 w-[310px] sm:w-[360px] bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-navy to-slate-900 p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-10 h-10 rounded-full bg-aqua/20 border border-aqua flex items-center justify-center text-aqua">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-wa rounded-full border-2 border-navy"></span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm leading-tight">Água Viva Atendimento</h4>
+                        <p class="text-xs text-slate-300 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 bg-wa rounded-full inline-block animate-pulse"></span> Online agora
+                        </p>
+                    </div>
+                </div>
+                <button id="close-wa-chat" class="text-slate-400 hover:text-white transition-colors p-1 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Chat Body -->
+            <div class="p-4 bg-slate-50 space-y-3 text-sm">
+                <!-- Welcome balloon -->
+                <div class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 max-w-[90%] text-slate-800 leading-relaxed text-xs sm:text-sm">
+                    Olá! 👋 Seja bem-vindo à Água Viva. Como podemos te ajudar hoje? Escolha uma opção para iniciar no WhatsApp:
+                </div>
+                
+                <!-- Quick Action Buttons with automated messages -->
+                <div class="space-y-2 pt-1">
+                    <button class="wa-quick-option w-full text-left bg-white hover:bg-aqua/10 hover:border-aqua/50 border border-slate-200 rounded-xl p-2.5 transition-all text-xs font-semibold text-slate-700 flex items-center justify-between group" data-key="aulaExperimental">
+                        <span>🏊 Agendar Aula Experimental</span>
+                        <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-aqua transition-colors"></i>
+                    </button>
+                    <button class="wa-quick-option w-full text-left bg-white hover:bg-aqua/10 hover:border-aqua/50 border border-slate-200 rounded-xl p-2.5 transition-all text-xs font-semibold text-slate-700 flex items-center justify-between group" data-key="planosEValores">
+                        <span>💰 Consultar Planos e Preços</span>
+                        <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-aqua transition-colors"></i>
+                    </button>
+                    <button class="wa-quick-option w-full text-left bg-white hover:bg-aqua/10 hover:border-aqua/50 border border-slate-200 rounded-xl p-2.5 transition-all text-xs font-semibold text-slate-700 flex items-center justify-between group" data-key="horarios">
+                        <span>⏰ Ver Horários de Turmas</span>
+                        <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-aqua transition-colors"></i>
+                    </button>
+                    <button class="wa-quick-option w-full text-left bg-white hover:bg-aqua/10 hover:border-aqua/50 border border-slate-200 rounded-xl p-2.5 transition-all text-xs font-semibold text-slate-700 flex items-center justify-between group" data-key="padrao">
+                        <span>💬 Outras Dúvidas / Falar Conosco</span>
+                        <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-aqua transition-colors"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Input Footer -->
+            <div class="p-3 bg-white border-t border-slate-100 flex items-center gap-2">
+                <input type="text" id="wa-custom-input" placeholder="Ou digite sua dúvida aqui..." class="flex-1 text-xs bg-slate-50 border border-slate-200 rounded-full px-3 py-2 focus:outline-none focus:border-aqua text-slate-800">
+                <button id="wa-send-custom" class="w-8 h-8 rounded-full bg-wa text-white flex items-center justify-center hover:bg-green-600 transition-colors shrink-0">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Floating Button with Pulse & Badge -->
+        <button id="toggle-wa-chat" class="relative rounded-full w-14 h-14 md:w-16 md:h-16 flex items-center justify-center text-white text-2xl md:text-3xl bg-[#25D366] shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:scale-110 transition-transform hover-trigger focus:outline-none">
+            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white animate-bounce">1</span>
+            <i class="fa-brands fa-whatsapp"></i>
+        </button>
+    </div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     
     <script>
+        // Função auxiliar para gerar link do WhatsApp com mensagem automática
+        function getWaUrl(msg) {
+            const text = encodeURIComponent(msg || (SITE_CONFIG.mensagensAutomaticas && SITE_CONFIG.mensagensAutomaticas.padrao) || "Olá! Gostaria de mais informações.");
+            return `https://wa.me/${SITE_CONFIG.whatsappNumero}?text=${text}`;
+        }
+
         // --- INJECTION FROM SITE_CONFIG ---
         function applySiteConfig() {
-            const waUrl = `https://wa.me/${SITE_CONFIG.whatsappNumero}`;
-            document.getElementById('nav-whatsapp').href = waUrl;
-            document.getElementById('mobile-whatsapp').href = waUrl;
-            document.getElementById('horarios-whatsapp').href = waUrl;
-            document.getElementById('cta-whatsapp').href = waUrl;
-            document.getElementById('footer-whatsapp').href = waUrl;
-            document.getElementById('float-whatsapp').href = waUrl;
+            const msgs = SITE_CONFIG.mensagensAutomaticas || {};
+            
+            // Botões do Site com Mensagens Contextuais Automáticas
+            document.getElementById('nav-whatsapp').href = getWaUrl(msgs.padrao);
+            document.getElementById('mobile-whatsapp').href = getWaUrl(msgs.padrao);
+            document.getElementById('horarios-whatsapp').href = getWaUrl(msgs.horarios);
+            document.getElementById('cta-whatsapp').href = getWaUrl(msgs.jornada);
+            document.getElementById('footer-whatsapp').href = getWaUrl(msgs.padrao);
+            
+            // Botões de Modalidades (Natação, Hidroginástica, Treino)
+            document.querySelectorAll('.btn-modalidade-wa').forEach(btn => {
+                const mod = btn.getAttribute('data-modalidade');
+                const msg = msgs[mod] || msgs.padrao;
+                btn.href = getWaUrl(msg);
+            });
             
             document.getElementById('btn-siga-insta').href = SITE_CONFIG.instagramLink;
             document.getElementById('btn-siga-face').href = SITE_CONFIG.facebookLink;
@@ -573,6 +679,79 @@
             });
         }
         applySiteConfig();
+
+        // --- INTERACTIVE WHATSAPP WIDGET LOGIC ---
+        const toggleWaBtn = document.getElementById('toggle-wa-chat');
+        const waChatBox = document.getElementById('wa-chat-box');
+        const closeWaBtn = document.getElementById('close-wa-chat');
+        const customWaInput = document.getElementById('wa-custom-input');
+        const sendCustomWaBtn = document.getElementById('wa-send-custom');
+
+        function openWaWidget() {
+            waChatBox.classList.remove('hidden');
+            setTimeout(() => {
+                waChatBox.classList.remove('opacity-0', 'translate-y-4');
+            }, 10);
+        }
+
+        function closeWaWidget() {
+            waChatBox.classList.add('opacity-0', 'translate-y-4');
+            setTimeout(() => {
+                waChatBox.classList.add('hidden');
+            }, 300);
+        }
+
+        toggleWaBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (waChatBox.classList.contains('hidden')) {
+                openWaWidget();
+            } else {
+                closeWaWidget();
+            }
+        });
+
+        closeWaBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeWaWidget();
+        });
+
+        // Quick Options click
+        document.querySelectorAll('.wa-quick-option').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const key = btn.getAttribute('data-key');
+                const msgs = SITE_CONFIG.mensagensAutomaticas || {};
+                const msg = msgs[key] || msgs.padrao;
+                window.open(getWaUrl(msg), '_blank');
+                closeWaWidget();
+            });
+        });
+
+        // Custom text submission in widget
+        function sendCustomFromWidget() {
+            const txt = customWaInput.value.trim();
+            if (txt) {
+                window.open(getWaUrl(txt), '_blank');
+                customWaInput.value = '';
+                closeWaWidget();
+            }
+        }
+
+        sendCustomWaBtn.addEventListener('click', sendCustomFromWidget);
+        customWaInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendCustomFromWidget();
+            }
+        });
+
+        // Close on clicking outside widget
+        document.addEventListener('click', (e) => {
+            if (!document.getElementById('wa-widget-container').contains(e.target)) {
+                if (!waChatBox.classList.contains('hidden')) {
+                    closeWaWidget();
+                }
+            }
+        });
 
         // --- MOBILE MENU LOGIC ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
